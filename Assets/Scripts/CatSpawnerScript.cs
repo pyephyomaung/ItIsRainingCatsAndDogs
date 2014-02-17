@@ -42,7 +42,6 @@ public class CatSpawnerScript : MonoBehaviour
 
 	string getPattern() {
 		string[] patterns = new string[] { 
-			"10000000000",
 			"10100000000",
 			"10101000000",
 			"10101010000",
@@ -54,6 +53,7 @@ public class CatSpawnerScript : MonoBehaviour
 			"01010101010",
 			"10101010101",
 		};
+
 		var currentPattern = patterns [patternIndex];
 		patternIndex = (patternIndex + 1) % patterns.Length;
 		return currentPattern;
