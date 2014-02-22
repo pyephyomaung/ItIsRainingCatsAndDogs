@@ -25,16 +25,17 @@ public class CatSpawnerScript : MonoBehaviour
 			if (pattern[i] == '1') {
 				var spawnPosX = spawnPosXs[i];
 				var spawnPos = transform.position;
-				spawnPos.x = spawnPosX;
+				spawnPos.x = spawnPosX + Random.Range(-0.5f, 0.5f);
+				spawnPos.y = spawnPos.y + Random.Range(-0.5f, 1.0f);
 				Instantiate(cat, spawnPos, transform.rotation);
 			}
 		}
 
 		// Play the spawning effect from all of the particle systems.
-		foreach(ParticleSystem p in GetComponentsInChildren<ParticleSystem>())
-		{
-			p.Play();
-		}
+//		foreach(ParticleSystem p in GetComponentsInChildren<ParticleSystem>())
+//		{
+//			p.Play();
+//		}
 
 		//	update pattern pattern for next spawn
 
@@ -42,15 +43,13 @@ public class CatSpawnerScript : MonoBehaviour
 
 	string getPattern() {
 		string[] patterns = new string[] { 
-			"10100000000",
-			"10101000000",
-			"10101010000",
-			"10101010100",
+			"10101010101",
 			"10101010101",
 			"10101001010",
 			"10100101010",
 			"10010101010",
 			"01010101010",
+			"10101010101",
 			"10101010101",
 		};
 
