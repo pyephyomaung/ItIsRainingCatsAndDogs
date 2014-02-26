@@ -5,9 +5,9 @@ public class CatSpawnerScript : MonoBehaviour
 {
 	public GameObject cat;
 
-	private float spawnTime = 0.5f;		// The amount of time between each spawn.
-	private float spawnDelay = 3f;		// The amount of time before spawning starts.
-	private float[] spawnPosXs = new float[] { -10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10 };
+	private float spawnTime = 0.7f;		// The amount of time between each spawn.
+	private float spawnDelay = 2f;		// The amount of time before spawning starts.
+	private float[] spawnPosXs = new float[] { -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6 };
 	private int patternIndex = 0;
 	
 	void Start ()
@@ -25,8 +25,8 @@ public class CatSpawnerScript : MonoBehaviour
 			if (pattern[i] == '1') {
 				var spawnPosX = spawnPosXs[i];
 				var spawnPos = transform.position;
-				spawnPos.x = spawnPosX + Random.Range(-0.5f, 0.5f);
-				spawnPos.y = spawnPos.y + Random.Range(-0.5f, 1.0f);
+				spawnPos.x = spawnPosX;
+				spawnPos.y = spawnPos.y;
 				Instantiate(cat, spawnPos, transform.rotation);
 			}
 		}
@@ -43,14 +43,23 @@ public class CatSpawnerScript : MonoBehaviour
 
 	string getPattern() {
 		string[] patterns = new string[] { 
-			"10101010101",
-			"10101010101",
-			"10101001010",
-			"10100101010",
-			"10010101010",
-			"01010101010",
-			"10101010101",
-			"10101010101",
+			"1 1 1   1 1 1",
+			"1 1 1   1 1 1",
+			"1 1 1   1 1 1",
+			"11 1  1  1  1",
+			"11 1  11  1 1",
+			"1 1  1111  11",
+			"1 1  11111   ",
+			"1 1 1  11  11",
+			"1 1 11   1 11",
+			"1 1 1 1  11 1",
+			"1 11 1  11 11",
+			"1 11 1  11 11",
+			"11      1 1 1",
+			"1 1    1 1 11",
+			"11 11  11 1 1",
+			"11 1   1 11 1",
+			"1 1 1   111 1",
 		};
 
 		var currentPattern = patterns [patternIndex];

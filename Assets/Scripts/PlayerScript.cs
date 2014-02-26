@@ -44,12 +44,17 @@ public class PlayerScript : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D collision) {
 		if (collision.gameObject.tag == "Enemy") {
-			Destroy(gameObject);
+			renderer.enabled = false;
+			audio.Play();
+			particleSystem.Play();
+
+			Destroy(gameObject, 0.3f);
 		}
 	}
 
 	void OnDestroy()
 	{
+
 		// Game Over
 		// Add it to the parent, as this game object is likely to be destroyed immediately
 		transform.parent.gameObject.AddComponent<GameOverScript>();
