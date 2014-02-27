@@ -10,13 +10,17 @@ public class PlayerScript : MonoBehaviour {
 	public float eastBound = 6.4f;
 	public float westBound = -6.4f;
 
+	private ScoreScript scoreScript;
+	private bool isAlive = true;
 	// Use this for initialization
 	void Start () {
-	
+		scoreScript = GameObject.Find("Score").GetComponent<ScoreScript>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		// Set the score 
+		scoreScript.score = (int)Time.time;
 		if (Input.touchCount > 0)
 		{
 			switch (Input.GetTouch(0).phase) {
@@ -54,7 +58,7 @@ public class PlayerScript : MonoBehaviour {
 
 	void OnDestroy()
 	{
-
+		isAlive = true;
 		// Game Over
 		// Add it to the parent, as this game object is likely to be destroyed immediately
 		transform.parent.gameObject.AddComponent<GameOverScript>();

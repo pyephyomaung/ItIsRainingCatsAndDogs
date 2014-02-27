@@ -19,14 +19,13 @@ public class CatSpawnerScript : MonoBehaviour
 	
 	void Spawn ()
 	{
-		// instantiate cats according to the pattern
+		var spawnPos = transform.position;
 		string pattern = getPattern();
 		for (int i = 0; i < spawnPosXs.Length; i++) {
 			if (pattern[i] == '1') {
 				var spawnPosX = spawnPosXs[i];
-				var spawnPos = transform.position;
 				spawnPos.x = spawnPosX;
-				spawnPos.y = spawnPos.y;
+				spawnPos.y = spawnPos.y + ((i % 2 == 0)? 0f : 3f);
 				Instantiate(cat, spawnPos, transform.rotation);
 			}
 		}
@@ -43,23 +42,23 @@ public class CatSpawnerScript : MonoBehaviour
 
 	string getPattern() {
 		string[] patterns = new string[] { 
-			"1 1 1   1 1 1",
-			"1 1 1   1 1 1",
-			"1 1 1   1 1 1",
-			"11 1  1  1  1",
-			"11 1  11  1 1",
-			"1 1  1111  11",
-			"1 1  11111   ",
-			"1 1 1  11  11",
-			"1 1 11   1 11",
-			"1 1 1 1  11 1",
-			"1 11 1  11 11",
-			"1 11 1  11 11",
-			"11      1 1 1",
-			"1 1    1 1 11",
-			"11 11  11 1 1",
-			"11 1   1 11 1",
-			"1 1 1   111 1",
+			"11111   11111",
+			"11111   11111",
+			"11111   11111",
+			"1111  1  1111",
+			"1111  11  111",
+			"111  1111  11",
+			"111  11111  1",
+			"111        11",
+			"111111   1111",
+			"1111111  1111",
+			"111111  11111",
+			"111111  11111",
+			"11      11111",
+			"1  1111111111",
+			"1      111111",
+			"1111   111111",
+			"11111   11111",
 		};
 
 		var currentPattern = patterns [patternIndex];
