@@ -11,16 +11,22 @@ public class PlayerScript : MonoBehaviour {
 	public float westBound = -6.4f;
 
 	private ScoreScript scoreScript;
+	private CatSpawnerScript spawnScript;
+	private bool isRaining = false;
 	private bool isAlive = true;
+	private float startTime = 0;
 	// Use this for initialization
 	void Start () {
 		scoreScript = GameObject.Find("Score").GetComponent<ScoreScript>();
+		spawnScript = GameObject.Find("CatSpawner").GetComponent<CatSpawnerScript>();
+
+		scoreScript.score = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		// Set the score 
-		scoreScript.score = (int)Time.time;
+		if (isRaining && isAlive) scoreScript.score = (int)(Time.time - startTime);
 		if (Input.touchCount > 0)
 		{
 			switch (Input.GetTouch(0).phase) {
@@ -28,6 +34,12 @@ public class PlayerScript : MonoBehaviour {
 				rigidbody2D.gravityScale = 0;
 				break;
 			case TouchPhase.Moved:
+				if (!isRaining) {
+					spawnScript.RepeatSpawn();
+					isRaining = true;
+					startTime = Time.time;
+				}
+
 				Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
 				if (debugText != null) debugText.text = string.Format("deltaposition x:{0} y:{1}", touchDeltaPosition.x, touchDeltaPosition.y);
 				float xShift = touchDeltaPosition.x * speed;
@@ -51,8 +63,7 @@ public class PlayerScript : MonoBehaviour {
 			renderer.enabled = false;
 			audio.Play();
 			particleSystem.Play();
-
-			Destroy(gameObject, 0.3f);
+			Destroy(gameObject,0.2f);
 		}
 	}
 

@@ -5,6 +5,7 @@ public class CatScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Physics2D.IgnoreLayerCollision (14, 14);	// ignore enemy-enemy collision
 		hasSpawn = false;
 	}
 
@@ -16,7 +17,7 @@ public class CatScript : MonoBehaviour {
 			Spawn();
 		}
 
-		else if (hasSpawn && !renderer.IsVisibleFrom(Camera.main))
+		else if (hasSpawn && !renderer.IsVisibleFrom(Camera.main) && transform.position.y < 0)
 		{
 			Destroy(gameObject);
 		}
