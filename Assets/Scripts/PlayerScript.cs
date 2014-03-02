@@ -9,18 +9,27 @@ public class PlayerScript : MonoBehaviour {
 	public float southBound = -11f;
 	public float eastBound = 6.4f;
 	public float westBound = -6.4f;
+	public bool rainOnStart = false;
 
 	private ScoreScript scoreScript;
 	private CatSpawnerScript spawnScript;
+	private GameObject bgMusicGameObject;
 	private bool isRaining = false;
 	private bool isAlive = true;
 	private float startTime = 0;
+
 	// Use this for initialization
 	void Start () {
 		scoreScript = GameObject.Find("Score").GetComponent<ScoreScript>();
 		spawnScript = GameObject.Find("CatSpawner").GetComponent<CatSpawnerScript>();
+		bgMusicGameObject = GameObject.Find("Music");
 
 		scoreScript.score = 0;
+
+		if (rainOnStart && !isRaining) {
+			StartRaining();
+		}
+
 	}
 	
 	// Update is called once per frame
@@ -35,9 +44,7 @@ public class PlayerScript : MonoBehaviour {
 				break;
 			case TouchPhase.Moved:
 				if (!isRaining) {
-					spawnScript.RepeatSpawn();
-					isRaining = true;
-					startTime = Time.time;
+					StartRaining();
 				}
 
 				Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
@@ -58,6 +65,13 @@ public class PlayerScript : MonoBehaviour {
 		}
 	}
 
+	void StartRaining() {
+		spawnScript.RepeatSpawn();
+		isRaining = true;
+		startTime = Time.time;
+		bgMusicGameObject.audio.Play ();
+	}
+
 	void OnCollisionEnter2D(Collision2D collision) {
 		if (collision.gameObject.tag == "Enemy") {
 			renderer.enabled = false;
@@ -73,5 +87,6 @@ public class PlayerScript : MonoBehaviour {
 		// Game Over
 		// Add it to the parent, as this game object is likely to be destroyed immediately
 		transform.parent.gameObject.AddComponent<GameOverScript>();
+		bgMusicGameObject.audio.Stop ();
 	}
 }

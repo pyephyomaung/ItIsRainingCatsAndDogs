@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CatSpawnerScript : MonoBehaviour
 {
-	public GameObject cat;
+	public GameObject[] catsAndDogs;
 
 	private float spawnTime = 0.3f;		// The amount of time between each spawn.
 	private float spawnDelay = 0.5f;		// The amount of time before spawning starts.
@@ -17,7 +17,7 @@ public class CatSpawnerScript : MonoBehaviour
 
 
 	void  Spawn ()
-	{
+	{   
 		Vector3 spawnPos = transform.position;
 		float gap = 4.0f;
 
@@ -26,9 +26,10 @@ public class CatSpawnerScript : MonoBehaviour
 		for (int i = 0; i < spawnPosXs.Length; i++) {
 			if (pattern[i] == '1') {
 				var spawnPosX = spawnPosXs[i];
-				spawnPos.x = spawnPosX;
-				spawnPos.y = spawnPos.y;
-				Instantiate(cat, spawnPos, transform.rotation);
+				spawnPos.x = spawnPosX + Random.Range(-0.2f, 0.2f);
+				spawnPos.y = spawnPos.y + Random.Range(-0.6f, 0.6f);
+				var randIndex = Random.Range (0, catsAndDogs.Length);
+				Instantiate(catsAndDogs[randIndex], spawnPos, transform.rotation);
 				msg += spawnPos.y  + " ";
 			}
 		}	
