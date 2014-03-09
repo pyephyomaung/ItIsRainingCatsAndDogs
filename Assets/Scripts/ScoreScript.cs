@@ -6,9 +6,7 @@ public class ScoreScript : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		if (Screen.dpi > 0) {
-			guiText.fontSize = (int) (Screen.dpi / 7);		
-		}
+		guiText.fontSize = AppConstants.GetFontSize ();
 	}
 	
 	// Update is called once per frame

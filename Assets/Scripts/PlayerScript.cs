@@ -10,6 +10,7 @@ public class PlayerScript : MonoBehaviour {
 	public float eastBound = 6.4f;
 	public float westBound = -6.4f;
 	public bool rainOnStart = false;
+	public bool deathIsNotTheEnd = false;
 
 	private ScoreScript scoreScript;
 	private CatSpawnerScript spawnScript;
@@ -74,10 +75,12 @@ public class PlayerScript : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D collision) {
 		if (collision.gameObject.tag == "Enemy") {
-			renderer.enabled = false;
+			renderer.enabled = deathIsNotTheEnd ? true : false;
 			audio.Play();
 			particleSystem.Play();
-			Destroy(gameObject,0.2f);
+			if (!deathIsNotTheEnd) {
+				Destroy(gameObject,0.2f);
+			}
 		}
 	}
 
