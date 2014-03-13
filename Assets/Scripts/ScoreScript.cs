@@ -6,7 +6,9 @@ public class ScoreScript : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		guiText.fontSize = AppConstants.GetFontSize ();
+		guiText.fontSize = AppConstants.GetDefaultFontSize ();
+		guiText.fontStyle = FontStyle.Bold;
+		guiText.font = (Font)Resources.Load("Fonts/BadBlackCat");
 	}
 	
 	// Update is called once per frame

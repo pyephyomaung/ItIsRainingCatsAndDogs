@@ -8,9 +8,15 @@ using System.Text.RegularExpressions;
 
 public class GameOverScript : MonoBehaviour {
 	private bool scoreBoardLayout = false;
+	private GUIStyle buttonStyle;
+
 	// Use this for initialization
 	void Start () {
-	
+		buttonStyle = new GUIStyle();
+		buttonStyle.alignment = TextAnchor.MiddleCenter;
+		buttonStyle.fontSize = AppConstants.GetLargeFontSize();
+		buttonStyle.fontStyle = FontStyle.Bold;
+		buttonStyle.font = (Font)Resources.Load("Fonts/BadBlackCat");
 	}
 	
 	// Update is called once per frame
@@ -25,14 +31,14 @@ public class GameOverScript : MonoBehaviour {
 	}
 
 	void RenderInitialLayout() {
-		const int buttonWidth = 140;
-		const int buttonHeight = 60;
-		
+		int buttonWidth = Screen.width / 3;
+		int buttonHeight = Screen.height / 16;
+
 		if (GUI.Button(
 			// Center in X, 1/4 of the height in Y
 			new Rect(Screen.width / 2 - (buttonWidth / 2), (1 * Screen.height / 4) - (buttonHeight / 2), buttonWidth, buttonHeight),
-			"RETRY"
-			))
+			"RETRY",
+			buttonStyle))
 		{
 			// Reload the level
 			Application.LoadLevel("Stage1");  
@@ -41,8 +47,8 @@ public class GameOverScript : MonoBehaviour {
 		if (GUI.Button(
 			// Center in X, 2/4 of the height in Y
 			new Rect(Screen.width / 2 - (buttonWidth / 2), (2 * Screen.height / 4) - (buttonHeight / 2), buttonWidth, buttonHeight),
-			"SCORES"
-			))
+			"SCORES",
+			buttonStyle))
 		{
 			// Load scores
 			CallFBInit();
@@ -52,8 +58,8 @@ public class GameOverScript : MonoBehaviour {
 		if (GUI.Button(
 			// Center in X, 3/4 of the height in Y
 			new Rect(Screen.width / 2 - (buttonWidth / 2), (3 * Screen.height / 4) - (buttonHeight / 2), buttonWidth, buttonHeight),
-			"QUIT"
-			))
+			"QUIT",
+			buttonStyle))
 		{
 			Application.Quit();
 		}
