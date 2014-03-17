@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 public class GameOverScript : MonoBehaviour {
 	private bool scoreBoardLayout = false;
 	private GUIStyle buttonStyle;
+	public Texture2D image;
 
 	// Use this for initialization
 	void Start () {
@@ -17,6 +18,7 @@ public class GameOverScript : MonoBehaviour {
 		buttonStyle.fontSize = AppConstants.GetLargeFontSize();
 		buttonStyle.fontStyle = FontStyle.Bold;
 		buttonStyle.font = (Font)Resources.Load("Fonts/BadBlackCat");
+		buttonStyle.normal.background = (Texture2D)Resources.Load ("Materials/catGoldSkin");
 	}
 	
 	// Update is called once per frame
@@ -31,8 +33,8 @@ public class GameOverScript : MonoBehaviour {
 	}
 
 	void RenderInitialLayout() {
-		int buttonWidth = Screen.width / 3;
-		int buttonHeight = Screen.height / 16;
+		int buttonWidth = Screen.width / 2;
+		int buttonHeight = Screen.height / 12;
 
 		if (GUI.Button(
 			// Center in X, 1/4 of the height in Y

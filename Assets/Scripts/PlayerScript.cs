@@ -30,7 +30,6 @@ public class PlayerScript : MonoBehaviour {
 		if (rainOnStart && !isRaining) {
 			StartRaining();
 		}
-
 	}
 	
 	// Update is called once per frame
