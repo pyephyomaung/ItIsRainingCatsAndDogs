@@ -83,6 +83,11 @@ public class PlayerScript : MonoBehaviour {
 		}
 	}
 
+	// custom method on stage cleared
+	public void OnStageCleared() {
+		transform.parent.gameObject.AddComponent<GameOverScript>();
+	}
+
 	void OnDestroy()
 	{
 		isAlive = true;
