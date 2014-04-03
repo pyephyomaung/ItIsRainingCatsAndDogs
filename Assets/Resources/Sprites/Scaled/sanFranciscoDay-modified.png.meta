@@ -48,10 +48,10 @@ TextureImporter:
     - name: sanFranciscoDay-modified_0
       rect:
         serializedVersion: 2
-        x: 1280
-        y: 127
-        width: 720
-        height: 1088
+        x: 2760
+        y: 286
+        width: 1440
+        height: 2200
       alignment: 0
       pivot: {x: .5, y: .5}
   spritePackingTag: 
