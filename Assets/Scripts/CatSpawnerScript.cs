@@ -9,11 +9,13 @@ public class CatSpawnerScript : MonoBehaviour
 	private float spawnDelay = 0.5f;		// The amount of time before spawning starts.
 	private float[] spawnPosXs = new float[] { -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6 };
 	private int patternIndex = 0;
+	private bool gameover;
 	public static readonly string END_OF_PATTERNS = "END";
 
 	private PlayerScript playerScript;
 
 	void Start() {
+		gameover = false;
 		playerScript = GameObject.Find("Player").GetComponent<PlayerScript>();
 	}
 
@@ -25,40 +27,53 @@ public class CatSpawnerScript : MonoBehaviour
 
 	void  Spawn ()
 	{   
+
 		Vector3 spawnPos = transform.position;
-		float gap = 4.0f;
 
-		string pattern = getPattern();
-		if (pattern == END_OF_PATTERNS) {
-			CancelInvoke ("Spawn");
-			playerScript.OnStageCleared();
-			return;
-		}
-		string msg = "";
-		for (int i = 0; i < spawnPosXs.Length; i++) {
-			if (pattern[i] == '1' || pattern[i] == 'x') {
-				var spawnPosX = spawnPosXs[i];
-				spawnPos.x = spawnPosX + Random.Range(-0.2f, 0.2f);
-				spawnPos.y = spawnPos.y + (pattern[i] == 'x' ? Random.Range(-0.07f, 0.07f) : Random.Range(-0.6f, 0.6f));	// less variation if pavement
-				var randIndex = Random.Range (0, catsAndDogs.Length);
-				var rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f));
-				Instantiate(catsAndDogs[randIndex], spawnPos, rotation);
-				msg += spawnPos.y  + " ";
+		if (gameover) {
+			var a = Random.Range(0, spawnPosXs.Length);
+			var b = Random.Range(0, spawnPosXs.Length);
+			var c = Random.Range(0, spawnPosXs.Length);
+			for (int i = 0; i < spawnPosXs.Length; i++) {
+				if (i == a || i == b || i == c) {
+					var spawnPosX = spawnPosXs[i];
+					spawnPos.x = spawnPosX + Random.Range(-0.2f, 0.2f);
+					var randIndex = Random.Range (0, catsAndDogs.Length);
+					var rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f));
+					Instantiate(catsAndDogs[randIndex], spawnPos, rotation);
+				}
 			}
-		}	
-		//print (msg);
-	
+		} else {
 
-		// Play the spawning effect from all of the particle systems.
-//		foreach(ParticleSystem p in GetComponentsInChildren<ParticleSystem>())
-//		{
-//			p.Play();
-//		}
+			string pattern = getPattern();
+			if (pattern == END_OF_PATTERNS) {
+				CancelInvoke ("Spawn");
+				gameover = true;
+				playerScript.OnStageCleared();
+				return;
+			}
 
-		//	update pattern pattern for next spawn
-
+			for (int i = 0; i < spawnPosXs.Length; i++) {
+				if (pattern[i] == '1' || pattern[i] == 'x') {
+					var spawnPosX = spawnPosXs[i];
+					spawnPos.x = spawnPosX + Random.Range(-0.2f, 0.2f);
+					spawnPos.y = spawnPos.y + (pattern[i] == 'x' ? Random.Range(-0.07f, 0.07f) : Random.Range(-0.6f, 0.6f));	// less variation if pavement
+					var randIndex = Random.Range (0, catsAndDogs.Length);
+					var rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f));
+					Instantiate(catsAndDogs[randIndex], spawnPos, rotation);
+				}
+			}
+		}
 	}
 
+	public void GameOver()
+	{
+		this.gameover = true;
+	}
+
+	public bool IsGameOver() {
+		return this.gameover;
+	}
 
 	string getPattern() {
 		string[] patterns = new string[] { 

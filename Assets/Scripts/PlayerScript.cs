@@ -11,21 +11,23 @@ public class PlayerScript : MonoBehaviour {
 	public float westBound = -6.4f;
 	public bool rainOnStart = false;
 	public bool deathIsNotTheEnd = false;
+	public GUIText scoreGUIText;
 
-	private ScoreScript scoreScript;
 	private CatSpawnerScript spawnScript;
 	private GameObject bgMusicGameObject;
 	private bool isRaining = false;
 	private bool isAlive = true;
 	private float startTime = 0;
+	public int score = 0;
+
 
 	// Use this for initialization
 	void Start () {
-		scoreScript = GameObject.Find("Score").GetComponent<ScoreScript>();
+		scoreGUIText.fontSize = AppConstants.GetDefaultFontSize ();
 		spawnScript = GameObject.Find("CatSpawner").GetComponent<CatSpawnerScript>();
 		bgMusicGameObject = GameObject.Find("Music");
 
-		scoreScript.score = 0;
+		score = 0;
 
 		if (rainOnStart && !isRaining) {
 			StartRaining();
@@ -35,7 +37,8 @@ public class PlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// Set the score 
-		if (isRaining && isAlive) scoreScript.score = (int)(Time.time - startTime);
+		if (isRaining && isAlive && !spawnScript.IsGameOver()) score = (int)(Time.time - startTime) * 10;
+
 		if (Input.touchCount > 0)
 		{
 			switch (Input.GetTouch(0).phase) {
@@ -43,6 +46,7 @@ public class PlayerScript : MonoBehaviour {
 				rigidbody2D.gravityScale = 0;
 				break;
 			case TouchPhase.Moved:
+
 				if (!isRaining) {
 					StartRaining();
 				}
@@ -65,6 +69,15 @@ public class PlayerScript : MonoBehaviour {
 		}
 	}
 
+	void OnGUI() {
+		// Set the score text.
+		scoreGUIText.text = "Score: " + score;
+	}
+
+	public int GetScore() {
+		return this.score;
+	}
+
 	void StartRaining() {
 		spawnScript.RepeatSpawn();
 		isRaining = true;
@@ -85,15 +98,17 @@ public class PlayerScript : MonoBehaviour {
 
 	// custom method on stage cleared
 	public void OnStageCleared() {
-		transform.parent.gameObject.AddComponent<GameOverScript>();
+		spawnScript.GameOver ();
+		GameOverScript.CreateComponent (transform.parent.gameObject, score, true);
 	}
 
 	void OnDestroy()
 	{
-		isAlive = true;
+		isAlive = false;
 		// Game Over
+		spawnScript.GameOver ();
 		// Add it to the parent, as this game object is likely to be destroyed immediately
-		transform.parent.gameObject.AddComponent<GameOverScript>();
+		GameOverScript.CreateComponent (transform.parent.gameObject, score, false);
 		bgMusicGameObject.audio.Stop ();
 	}
 }

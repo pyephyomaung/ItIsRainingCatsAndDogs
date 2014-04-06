@@ -6,12 +6,21 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 public class GameOverScript : MonoBehaviour {
-	private bool scoreBoardLayout = false;
 	private GUIStyle buttonStyle;
+	private GUIStyle labelStyle;
 	public Texture2D image;
-	private ScoreScript scoreScript;
-	public readonly string leaderboardId = "CgkIhcilyYIbEAIQAg";	// QA
-	// leaderboardId = "CgkIhcilyYIbEAIQAQ";
+	public bool stageCleared;
+	private int finalScore;
+	//public readonly string leaderboardId = "CgkIhcilyYIbEAIQAg";	// QA
+	public readonly string leaderboardId = "CgkIhcilyYIbEAIQAQ";
+
+	public static GameOverScript CreateComponent(GameObject where, int finalScoreArg, bool stageClearedArg) 
+	{
+		var created = where.AddComponent<GameOverScript> ();
+		created.finalScore = finalScoreArg;
+		created.stageCleared = stageClearedArg;
+		return created;
+	}
 	
 	// Use this for initialization
 	void Start () {
@@ -21,7 +30,12 @@ public class GameOverScript : MonoBehaviour {
 		buttonStyle.fontStyle = FontStyle.Bold;
 		buttonStyle.font = (Font)Resources.Load("Fonts/BadBlackCat");
 		buttonStyle.normal.background = (Texture2D)Resources.Load ("Materials/catGoldSkin");
-		scoreScript = GameObject.Find("Score").GetComponent<ScoreScript>();
+
+		labelStyle = new GUIStyle();
+		labelStyle.alignment = TextAnchor.MiddleCenter;
+		labelStyle.fontSize = AppConstants.GetLargeFontSize();
+		labelStyle.fontStyle = FontStyle.Normal;
+
 		GooglePlayGames.PlayGamesPlatform.Activate();
 	}
 	
@@ -32,7 +46,6 @@ public class GameOverScript : MonoBehaviour {
 
 	void OnGUI()
 	{
-		print ("here");
 		RenderInitialLayout ();
 	}
 
@@ -40,15 +53,25 @@ public class GameOverScript : MonoBehaviour {
 		int buttonWidth = Screen.width / 2;
 		int buttonHeight = Screen.height / 12;
 
-		if (GUI.Button(
-			// Center in X, 1/4 of the height in Y
-			new Rect(Screen.width / 2 - (buttonWidth / 2), (1 * Screen.height / 4) - (buttonHeight / 2), buttonWidth, buttonHeight),
-			"RETRY",
-			buttonStyle))
-		{
-			// Reload the level
-			Application.LoadLevel("Stage1");  
+
+		if (this.stageCleared) {
+			GUI.Label(
+				// Center in X, 1/4 of the height in Y
+				new Rect(Screen.width / 2 - (buttonWidth / 2), (1 * Screen.height / 4) - (buttonHeight / 2), buttonWidth, buttonHeight),
+				"CONGRATULATION!\nYOU WIN!",
+				labelStyle);
+		} else {
+			if (GUI.Button(
+				// Center in X, 1/4 of the height in Y
+				new Rect(Screen.width / 2 - (buttonWidth / 2), (1 * Screen.height / 4) - (buttonHeight / 2), buttonWidth, buttonHeight),
+				"RETRY",
+				buttonStyle))
+			{
+				// Reload the level
+				Application.LoadLevel("Stage1");  
+			}
 		}
+
 		
 		if (GUI.Button(
 			// Center in X, 2/4 of the height in Y
@@ -83,7 +106,7 @@ public class GameOverScript : MonoBehaviour {
 			Social.localUser.Authenticate((bool success) => {
 				if (success) {
 					// post score to leaderboard
-					Social.ReportScore(scoreScript.score, leaderboardId, (bool success2) => {
+					Social.ReportScore(finalScore, leaderboardId, (bool success2) => {
 						// show leaderboard UI
 						//Social.ShowLeaderboardUI();	// all leaderboards
 						((GooglePlayGames.PlayGamesPlatform) Social.Active).ShowLeaderboardUI(leaderboardId);
@@ -92,7 +115,7 @@ public class GameOverScript : MonoBehaviour {
 			});		
 		} else {
 			// post score to leaderboard
-			Social.ReportScore(scoreScript.score, leaderboardId, (bool success2) => {
+			Social.ReportScore(finalScore, leaderboardId, (bool success2) => {
 				// show leaderboard UI
 				//Social.ShowLeaderboardUI();	// all leaderboards
 				((GooglePlayGames.PlayGamesPlatform) Social.Active).ShowLeaderboardUI(leaderboardId);
