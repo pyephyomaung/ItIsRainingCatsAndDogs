@@ -11,8 +11,8 @@ public class GameOverScript : MonoBehaviour {
 	public Texture2D image;
 	public bool stageCleared;
 	private int finalScore;
-	//public readonly string leaderboardId = "CgkIhcilyYIbEAIQAg";	// QA
-	public readonly string leaderboardId = "CgkIhcilyYIbEAIQAQ";
+	public readonly string leaderboardId = "CgkIhcilyYIbEAIQAg";	// QA
+	//public readonly string leaderboardId = "CgkIhcilyYIbEAIQAQ";
 
 	public static GameOverScript CreateComponent(GameObject where, int finalScoreArg, bool stageClearedArg) 
 	{
