@@ -42,9 +42,9 @@ public class PlayerScript : MonoBehaviour {
 		if (Input.touchCount > 0)
 		{
 			switch (Input.GetTouch(0).phase) {
-			case TouchPhase.Began:
-				rigidbody2D.gravityScale = 0;
-				break;
+//			case TouchPhase.Began:
+//				rigidbody2D.gravityScale = 0;
+//				break;
 			case TouchPhase.Moved:
 
 				if (!isRaining) {
@@ -52,7 +52,7 @@ public class PlayerScript : MonoBehaviour {
 				}
 
 				Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
-				if (debugText != null) debugText.text = string.Format("deltaposition x:{0} y:{1}", touchDeltaPosition.x, touchDeltaPosition.y);
+				//if (debugText != null) debugText.text = string.Format("deltaposition x:{0} y:{1}", touchDeltaPosition.x, touchDeltaPosition.y);
 				float xShift = touchDeltaPosition.x * speed;
 				float yShift = touchDeltaPosition.y * speed;
 				float newX = transform.position.x + xShift;
@@ -61,9 +61,9 @@ public class PlayerScript : MonoBehaviour {
 				yShift = (newY >= southBound && newY <= northBound) ? yShift : 0; 
 				transform.Translate(xShift, yShift, 0);
 				break;
-			case TouchPhase.Ended:
-				rigidbody2D.gravityScale = 1;
-				break;
+//			case TouchPhase.Ended:
+//				rigidbody2D.gravityScale = 1;
+//				break;
 			}
 
 		}
