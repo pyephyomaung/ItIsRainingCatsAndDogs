@@ -16,9 +16,13 @@ public class GameOverScript : MonoBehaviour {
 
 	public static GameOverScript CreateComponent(GameObject where, int finalScoreArg, bool stageClearedArg) 
 	{
-		var created = where.AddComponent<GameOverScript> ();
-		created.finalScore = finalScoreArg;
-		created.stageCleared = stageClearedArg;
+		GameOverScript created = null;
+		if (where != null) {
+			created = where.AddComponent<GameOverScript> ();
+			created.finalScore = finalScoreArg;
+			created.stageCleared = stageClearedArg;
+		}
+
 		return created;
 	}
 	

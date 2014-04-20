@@ -13,6 +13,6 @@ public class AppConstants
 
 	public static int GetLargeFontSize()
 	{
-		return (int)(GetDefaultFontSize () * 1.5);
+		return (int)(GetDefaultFontSize () * 1.4);
 	}
 }

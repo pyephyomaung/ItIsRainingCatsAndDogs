@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CatSpawnerScript : MonoBehaviour
 {
 	public GameObject[] catsAndDogs;
+	private Queue<GameObject> catsAndDogsQ;
 
 	private float spawnTime = 0.3f;		// The amount of time between each spawn.
 	private float spawnDelay = 0.5f;		// The amount of time before spawning starts.
@@ -16,6 +18,12 @@ public class CatSpawnerScript : MonoBehaviour
 
 	void Start() {
 		gameover = false;
+		var count = 80;
+		var createdCatsAndDogs = new GameObject[count]; 
+		for (int i = 0; i < count; i++) {
+			createdCatsAndDogs[i] = Instantiate(catsAndDogs[i % catsAndDogs.Length]) as GameObject;
+		}
+		catsAndDogsQ = new Queue<GameObject> (createdCatsAndDogs);
 		playerScript = GameObject.Find("Player").GetComponent<PlayerScript>();
 	}
 
@@ -24,10 +32,15 @@ public class CatSpawnerScript : MonoBehaviour
 		InvokeRepeating("Spawn", spawnDelay, spawnTime);
 	}
 
+	public void QueueCatOrDog(GameObject g) {
+		if (catsAndDogsQ != null && !catsAndDogsQ.Contains(g))
+			catsAndDogsQ.Enqueue (g);
+	}
+
 
 	void  Spawn ()
 	{   
-
+		print (catsAndDogsQ.Count);
 		Vector3 spawnPos = transform.position;
 
 		if (gameover) {
@@ -38,9 +51,15 @@ public class CatSpawnerScript : MonoBehaviour
 				if (i == a || i == b || i == c) {
 					var spawnPosX = spawnPosXs[i];
 					spawnPos.x = spawnPosX + Random.Range(-0.2f, 0.2f);
-					var randIndex = Random.Range (0, catsAndDogs.Length);
 					var rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f));
-					Instantiate(catsAndDogs[randIndex], spawnPos, rotation);
+					if (catsAndDogsQ.Count > 0) {
+						var nextCatOrDog = catsAndDogsQ.Dequeue();
+						if (nextCatOrDog != null) {
+							nextCatOrDog.transform.position = spawnPos;
+							nextCatOrDog.transform.rotation = rotation;
+							nextCatOrDog.rigidbody2D.isKinematic = false;
+						}
+					}
 				}
 			}
 		} else {
@@ -58,9 +77,15 @@ public class CatSpawnerScript : MonoBehaviour
 					var spawnPosX = spawnPosXs[i];
 					spawnPos.x = spawnPosX + Random.Range(-0.2f, 0.2f);
 					spawnPos.y = spawnPos.y + (pattern[i] == 'x' ? Random.Range(-0.07f, 0.07f) : Random.Range(-0.6f, 0.6f));	// less variation if pavement
-					var randIndex = Random.Range (0, catsAndDogs.Length);
 					var rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f));
-					Instantiate(catsAndDogs[randIndex], spawnPos, rotation);
+					if (catsAndDogsQ.Count > 0) {
+						var nextCatOrDog = catsAndDogsQ.Dequeue();
+						if (nextCatOrDog != null) {
+							nextCatOrDog.transform.position = spawnPos;
+							nextCatOrDog.transform.rotation = rotation;
+							nextCatOrDog.rigidbody2D.isKinematic = false;
+						}
+					}
 				}
 			}
 		}

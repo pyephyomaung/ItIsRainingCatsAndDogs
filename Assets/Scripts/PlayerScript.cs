@@ -109,6 +109,6 @@ public class PlayerScript : MonoBehaviour {
 		spawnScript.GameOver ();
 		// Add it to the parent, as this game object is likely to be destroyed immediately
 		GameOverScript.CreateComponent (transform.parent.gameObject, score, false);
-		bgMusicGameObject.audio.Stop ();
+		if (bgMusicGameObject != null) bgMusicGameObject.audio.Stop ();
 	}
 }
