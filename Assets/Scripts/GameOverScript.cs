@@ -125,7 +125,6 @@ public class GameOverScript : MonoBehaviour {
 				((GooglePlayGames.PlayGamesPlatform) Social.Active).ShowLeaderboardUI(leaderboardId);
 			});
 		}
-		
 	}
 	#endregion Google Leaderboard
 }
