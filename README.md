@@ -15,4 +15,6 @@
 </div>
 
 <a href="http://www.facebook.com/itisrainingcatsanddogs">Facebook</a><br/>
-<a href="http://twitter.com/rainingCAndD">Twitter</a>
+<a href="http://twitter.com/rainingCAndD">Twitter</a><br/>
+<a href="https://play.google.com/store/apps/details?id=com.Seafood.itIsRainingCatsAndDogs">Play Store</a><br/>
+<a href="https://itunes.apple.com/us/app/it-is-raining-cats-and-dogs!/id873958764?mt=8">iTunes Store</a>
