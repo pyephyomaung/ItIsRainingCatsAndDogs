@@ -82,14 +82,14 @@ public class PlayerScript : MonoBehaviour {
 		spawnScript.RepeatSpawn();
 		isRaining = true;
 		startTime = Time.time;
-		bgMusicGameObject.audio.Play ();
+		bgMusicGameObject.GetComponent<AudioSource>().Play ();
 	}
 
 	void OnCollisionEnter2D(Collision2D collision) {
 		if (collision.gameObject.tag == "Enemy") {
-			renderer.enabled = deathIsNotTheEnd ? true : false;
-			audio.Play();
-			particleSystem.Play();
+			GetComponent<Renderer>().enabled = deathIsNotTheEnd ? true : false;
+			GetComponent<AudioSource>().Play();
+			GetComponent<ParticleSystem>().Play();
 			if (!deathIsNotTheEnd) {
 				Destroy(gameObject,0.2f);
 			}
@@ -109,6 +109,6 @@ public class PlayerScript : MonoBehaviour {
 		spawnScript.GameOver ();
 		// Add it to the parent, as this game object is likely to be destroyed immediately
 		GameOverScript.CreateComponent (transform.parent.gameObject, score, false);
-		if (bgMusicGameObject != null) bgMusicGameObject.audio.Stop ();
+		if (bgMusicGameObject != null) bgMusicGameObject.GetComponent<AudioSource>().Stop ();
 	}
 }

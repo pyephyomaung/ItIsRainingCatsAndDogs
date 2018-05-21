@@ -1,6 +1,1 @@
 lastUpgrade=00900
-proj.AppId=928403514373
-android.SetupDone=true
-ios.ClientId=928403514373-6d3kmc2ksk3rofrvphjf467ejauhcge5.apps.googleusercontent.com
-ios.BundleId=com.Seafood.itIsRainingCatsAndDogs
-ios.SetupDone=true

@@ -11,9 +11,9 @@ public class CatScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (gameObject.rigidbody2D.IsAwake() && transform.position.y < -30)
+		if (gameObject.GetComponent<Rigidbody2D>().IsAwake() && transform.position.y < -30)
 		{
-			gameObject.rigidbody2D.isKinematic = true;
+			gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
 			spawnerScript.QueueCatOrDog(gameObject);
 		}
 	}

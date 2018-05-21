@@ -57,7 +57,7 @@ public class CatSpawnerScript : MonoBehaviour
 						if (nextCatOrDog != null) {
 							nextCatOrDog.transform.position = spawnPos;
 							nextCatOrDog.transform.rotation = rotation;
-							nextCatOrDog.rigidbody2D.isKinematic = false;
+							nextCatOrDog.GetComponent<Rigidbody2D>().isKinematic = false;
 						}
 					}
 				}
@@ -83,7 +83,7 @@ public class CatSpawnerScript : MonoBehaviour
 						if (nextCatOrDog != null) {
 							nextCatOrDog.transform.position = spawnPos;
 							nextCatOrDog.transform.rotation = rotation;
-							nextCatOrDog.rigidbody2D.isKinematic = false;
+							nextCatOrDog.GetComponent<Rigidbody2D>().isKinematic = false;
 						}
 					}
 				}
