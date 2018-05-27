@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
 
-	public float speed = 0.035f;
+	public float speed = 0.025f;
 	public GUIText debugText;
 	public float northBound = 11f;
 	public float southBound = -11f;

@@ -37,3 +37,9 @@ Thumbs.db
 # Build folder #
 # ============ #
 Build/
+
+
+# ============= #
+# Visual Studio #
+# ============= #
+.vs
