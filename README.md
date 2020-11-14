@@ -1,20 +1,21 @@
-<h1>It's Raining Cats And Dogs</h1>
+# It's raining cats and Dogs &middot; [![mit license](https://img.shields.io/badge/license-MIT-50CB22.svg)](https://opensource.org/licenses/MIT)
 
-<div><strong>Platform:</strong> Unity 3D</div>
+It is raining cats and dogs near the Golden Gate Bridge. Protect the
+balloon from cats and dogs by dragging the balloon. They are just free
+falling but you will need a lot of reflex and agility to survive in
+this cuteness overflowing game. Just try to survive the game until the
+song ends! It is just a few minutes.
 
-<div><strong>Description:</strong> It is raining cats and dogs near the Golden Gate Bridge. Protect the balloon from cats and dogs by dragging the balloon. They are just free falling but you will need a lot of reflex and agility to survive in this cuteness overflowing game. Just try to survive the game until the song ends! It is just a few minutes.</p>
+## Quick start
 
-<div><strong>Screenshot:</strong><br/>
 
-<table>
-  <tr>
-    <td><img width="300" src="https://scontent-a.xx.fbcdn.net/hphotos-ash3/t1.0-9/10151166_645570972174721_370758766_n.png"/></td>
-    <td><img width="300" src="https://scontent-a.xx.fbcdn.net/hphotos-frc3/t1.0-9/10153722_645570942174724_2057269541_n.png"/></td>
-  <tr>
-</table>
-</div>
+Firstly, set up [`react-native`](https://reactnative.dev/docs/environment-setup) environment.
 
-<a href="http://www.facebook.com/itisrainingcatsanddogs">Facebook</a><br/>
-<a href="http://twitter.com/rainingCAndD">Twitter</a><br/>
-<a href="https://play.google.com/store/apps/details?id=com.Seafood.itIsRainingCatsAndDogs">Play Store</a><br/>
-<a href="https://itunes.apple.com/us/app/it-is-raining-cats-and-dogs!/id873958764?mt=8">iTunes Store</a>
+Then, install the dependencies:
+`npm install`
+
+Start the Metro bundler:
+`npx react-native start`
+
+Run on physical android device by connecting with a usb cable:
+`npx react-native run-android`
