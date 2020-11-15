@@ -2,7 +2,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import {StatusBar, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import getEntities from './src/entities';
 import Systems from './src/systems';
-import {GameEngine} from 'react-native-game-engine';
+import {GameEngine, GameEngineProperties} from 'react-native-game-engine';
+import {IGameEngine, IGameEngineEvent}  from './App.types';
 
 const styles = StyleSheet.create({
   container: {
@@ -46,20 +47,20 @@ const styles = StyleSheet.create({
 });
 
 const App: React.FC<{}> = props => {
-const gameEngineRef = useRef();
-const [isRunning, setIsRunning] = useState(true);
+  const gameEngineRef = useRef<IGameEngine>(null);
+  const [isRunning, setIsRunning] = useState(true);
 
-const onEvent = e => {
-  if (e.type === 'game-over') {
-    setIsRunning(false);
-  }
-};
+  const onEvent = (e: IGameEngineEvent) => {
+    if (e.type === 'game-over') {
+      setIsRunning(false);
+    }
+  };
 
-const reset = e => {
-  gameEngineRef?.current?.swap(getEntities(gameEngineRef));
-  setIsRunning(true);
-};
-  
+  const reset = () => {
+    gameEngineRef?.current?.swap(getEntities(gameEngineRef));
+    setIsRunning(true);
+  };
+
   return (
     <View style={styles.container}>
       <GameEngine 

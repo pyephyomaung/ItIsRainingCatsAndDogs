@@ -1,16 +1,20 @@
+import React from 'react';
 import Balloon from '../components/balloon';
 import Matter from 'matter-js';
+import {GameEngine} from 'react-native-game-engine';
 import {
   BALLOON_RADIUS, 
   GRAVITY_Y,
   SCREEN_WIDTH, 
   SCREEN_HEIGHT
 } from '../constants';
+import {IGameEngine} from '../../App.types';
+import {Entities} from './entities.types';
 
 // overwritting this function because the original references HTMLElement
 Matter.Common.isElement = () => false;
 
-export default gameEngineRef => {
+export default (gameEngineRef: React.RefObject<IGameEngine>): Entities => {
   const engine = Matter.Engine.create({enableSleeping: false});
   const world = engine.world;
   world.gravity.y = GRAVITY_Y;
@@ -24,7 +28,7 @@ export default gameEngineRef => {
     ));
 
     if (isBalloonPop) {
-      gameEngineRef.current.dispatch({ type: "game-over"});
+      gameEngineRef.current?.dispatch({ type: "game-over"});
     }
   });
 

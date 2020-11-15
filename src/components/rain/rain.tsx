@@ -32,6 +32,5 @@ const Rains = [
 
 export const getRandomRain = () => {
   const index = Math.floor(Math.random() * Rains.length);
-  const Component = Rains[index];
-  return <Component/>;
+  return Rains[index];
 };

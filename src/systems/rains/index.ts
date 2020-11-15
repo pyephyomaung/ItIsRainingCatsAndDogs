@@ -9,16 +9,18 @@ import {
 } from '../../constants';
 import Rain from '../../components/rain';
 import patterns from './patterns';
+import {Entity, Entities} from '../../entities/entities.types';
 
-const Rains = (entities, {time, dispatch}) => {
+const Rains = (entities: Entities, {time}: any) => {
   const engine: Matter.Engine = entities.physics.engine;
   const world: Matter.World = entities.physics.world;
   const tick: number = entities.physics.rainState.tick;
   const patternIndex: number = entities.physics.rainState.patternIndex;
 
   Object.keys(entities).forEach(k => {
-    if (k.startsWith('Rain') && entities[k].body.position.y > SCREEN_HEIGHT) {
-      Matter.World.remove(world, entities[k].body);
+    const entity = k.startsWith('Rain') ? entities[k] as Entity : null;
+    if (entity && entity.body.position.y > SCREEN_HEIGHT) {
+      Matter.World.remove(world, entity.body);
       delete(entities[k]);
     }
   });

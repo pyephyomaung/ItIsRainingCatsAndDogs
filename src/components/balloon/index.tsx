@@ -22,6 +22,6 @@ export default (
     body: initialBalloon,
     size: [radius * 2, radius * 2],
     color: color,
-    renderer: <Balloon/>
+    renderer: Balloon
   };
 };
