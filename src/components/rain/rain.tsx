@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, ImageStyle, ImageSourcePropType} from 'react-native';
-import Matter from 'matter-js';
+import Images from '../../assets/images';
 import {RainProps} from './rain.types';
 
 const RainFactory: (source: ImageSourcePropType) => React.FC<RainProps> = source => props => {
@@ -19,16 +19,9 @@ const RainFactory: (source: ImageSourcePropType) => React.FC<RainProps> = source
   return <Image style={style} resizeMode='stretch' source={source}/>;
 };
 
-const Rains = [
-  RainFactory(require('../../assets/sprites/chibiInu01-scaled.png')),
-  RainFactory(require('../../assets/sprites/chibiInu02-scaled.png')),
-  RainFactory(require('../../assets/sprites/chibiInu03-scaled.png')),
-  RainFactory(require('../../assets/sprites/chibiInu04-scaled.png')),
-  RainFactory(require('../../assets/sprites/chibiNeko01-scaled.png')),
-  RainFactory(require('../../assets/sprites/chibiNeko02-scaled.png')),
-  RainFactory(require('../../assets/sprites/chibiNeko03-scaled.png')),
-  RainFactory(require('../../assets/sprites/chibiNeko04-scaled.png'))
-];
+const Rains = Object.values(Images.cats)
+  .concat(Object.values(Images.dogs))
+  .map(RainFactory);
 
 export const getRandomRain = () => {
   const index = Math.floor(Math.random() * Rains.length);

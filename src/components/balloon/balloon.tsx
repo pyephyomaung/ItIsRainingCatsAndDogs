@@ -1,9 +1,7 @@
 import React from 'react';
 import {Image} from 'react-native';
-import Matter from 'matter-js';
+import Images from '../../assets/images';
 import {BalloonProps} from './balloon.types';
-
-const balloon = require('../../assets/sprites/balloon.png');
 
 const Balloon: React.FC<BalloonProps> = props => {
   const width = props.size[0];
@@ -20,7 +18,7 @@ const Balloon: React.FC<BalloonProps> = props => {
         height: height,
       }}
       resizeMode='stretch'
-      source={balloon}
+      source={Images.balloon}
     />
   );
 };

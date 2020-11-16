@@ -1,7 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {StatusBar, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {Image, StatusBar, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import getEntities from './src/entities';
 import Systems from './src/systems';
+import Images from './src/assets/images';
+import {SCREEN_WIDTH, SCREEN_HEIGHT} from './src/constants';
 import {GameEngine, GameEngineProperties} from 'react-native-game-engine';
 import {IGameEngine, IGameEngineEvent}  from './App.types';
 
@@ -9,6 +11,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000'
+  },
+  backgroundImage: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT
   },
   gameContainer: {
     position: 'absolute',
@@ -63,6 +74,10 @@ const App: React.FC<{}> = props => {
 
   return (
     <View style={styles.container}>
+      <Image 
+        source={Images.backgroundSF} 
+        style={styles.backgroundImage} 
+        resizeMode="stretch"/>
       <GameEngine 
         ref={gameEngineRef}
         style={styles.gameContainer}
