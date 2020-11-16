@@ -7,7 +7,7 @@ export interface IGameEngine extends GameEngine {
 };
 
 export interface IGameEngineEvent {
-  type: 'started' | 'ended' | 'swapped' | 'game-over'
+  type: 'started' | 'score' | 'ended' | 'swapped' | 'game-over'
 };
 
 export interface IDefaultTouchProcessorEvent {

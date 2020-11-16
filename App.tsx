@@ -7,6 +7,58 @@ import {SCREEN_WIDTH, SCREEN_HEIGHT} from './src/constants';
 import {GameEngine, GameEngineProperties} from 'react-native-game-engine';
 import {IGameEngine, IGameEngineEvent}  from './App.types';
 
+
+const App: React.FC<{}> = props => {
+  const gameEngineRef = useRef<IGameEngine>(null);
+  const [isRunning, setIsRunning] = useState(true);
+  const [score, setScore] = useState(0);
+
+  const onEvent = (e: IGameEngineEvent) => {
+    switch (e.type) {
+      case 'game-over':
+        setIsRunning(false);
+        break;
+      case 'score':
+        setScore(score + 1);
+        break;
+    }
+  };
+
+  const reset = () => {
+    gameEngineRef?.current?.swap(getEntities(gameEngineRef));
+    setIsRunning(true);
+    setScore(0);
+  };
+
+  return (
+    <View style={styles.container}>
+      <Image 
+        source={Images.backgroundSF} 
+        style={styles.backgroundImage} 
+        resizeMode='cover'/>
+      <GameEngine 
+        ref={gameEngineRef}
+        style={styles.gameContainer}
+        entities={getEntities(gameEngineRef)}
+        systems={Systems}
+        running={isRunning}
+        onEvent={onEvent}/>
+      <Text style={styles.score}>{score}</Text>
+      {!isRunning && (
+        <TouchableOpacity style={styles.fullScreenButton} onPress={reset}>
+          <View style={styles.fullScreen}>
+            <Text style={styles.gameOverText}>Game Over</Text>
+            <Text style={styles.gameOverSubText}>Try Again</Text>
+          </View>
+        </TouchableOpacity>
+      )}
+      <StatusBar hidden={true}/>
+    </View>
+  );
+};
+
+export default App;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -54,48 +106,16 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     flex: 1
+  },
+  score: {
+    position: 'absolute',
+    color: 'white',
+    fontSize: 36,
+    top: 20,
+    left: SCREEN_WIDTH / 2 - 20,
+    textShadowColor: '#444444',
+    textShadowOffset: {width: 2, height: 2},
+    textShadowRadius: 2,
+    fontFamily: 'monospace'
   }
 });
-
-const App: React.FC<{}> = props => {
-  const gameEngineRef = useRef<IGameEngine>(null);
-  const [isRunning, setIsRunning] = useState(true);
-
-  const onEvent = (e: IGameEngineEvent) => {
-    if (e.type === 'game-over') {
-      setIsRunning(false);
-    }
-  };
-
-  const reset = () => {
-    gameEngineRef?.current?.swap(getEntities(gameEngineRef));
-    setIsRunning(true);
-  };
-
-  return (
-    <View style={styles.container}>
-      <Image 
-        source={Images.backgroundSF} 
-        style={styles.backgroundImage} 
-        resizeMode="stretch"/>
-      <GameEngine 
-        ref={gameEngineRef}
-        style={styles.gameContainer}
-        entities={getEntities(gameEngineRef)}
-        systems={Systems}
-        running={isRunning}
-        onEvent={onEvent}/>
-      {!isRunning && (
-        <TouchableOpacity style={styles.fullScreenButton} onPress={reset}>
-          <View style={styles.fullScreen}>
-            <Text style={styles.gameOverText}>Game Over</Text>
-            <Text style={styles.gameOverSubText}>Try Again</Text>
-          </View>
-        </TouchableOpacity>
-      )}
-      <StatusBar hidden={true}/>
-    </View>
-  );
-};
-
-export default App;

@@ -6,5 +6,5 @@ export const CELL_X_OFFSET = 0;
 export const TICK_INTERVAL = 20;
 export const BALLOON_RADIUS = 16;
 export const GRAVITY_Y = 0.25;
-export const RAIN_SPAWN_Y_MAX = 50; // 0 - 10 random
+export const RAIN_SPAWN_Y_MAX = 80; // 0 - 10 random
 export const RAIN_RADIUS = 16;

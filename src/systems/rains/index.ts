@@ -11,19 +11,25 @@ import Rain from '../../components/rain';
 import patterns from './patterns';
 import {Entity, Entities} from '../../entities/entities.types';
 
-const Rains = (entities: Entities, {time}: any) => {
+const Rains = (
+  entities: Entities, 
+  {time, dispatch}: {time: {delta: number}, dispatch: Function}
+) => {
   const engine: Matter.Engine = entities.physics.engine;
   const world: Matter.World = entities.physics.world;
   const tick: number = entities.physics.rainState.tick;
   const patternIndex: number = entities.physics.rainState.patternIndex;
 
+  let isScored = false;
   Object.keys(entities).forEach(k => {
     const entity = k.startsWith('Rain') ? entities[k] as Entity : null;
     if (entity && entity.body.position.y > SCREEN_HEIGHT) {
       Matter.World.remove(world, entity.body);
       delete(entities[k]);
+      isScored = true;
     }
   });
+  isScored && dispatch({type: 'score'});
 
   if (tick % TICK_INTERVAL === 0 && patternIndex < patterns.length) {
     const pattern = patterns[patternIndex];
@@ -41,7 +47,6 @@ const Rains = (entities: Entities, {time}: any) => {
   }
 
   Matter.Engine.update(engine, time.delta);
-
   entities.physics.rainState.tick += 1;
 
   return entities;
