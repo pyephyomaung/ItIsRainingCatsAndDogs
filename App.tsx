@@ -16,7 +16,7 @@ const App: React.FC<{}> = props => {
   const onEvent = (e: IGameEngineEvent) => {
     switch (e.type) {
       case 'game-over':
-        setIsRunning(false);
+        //  setIsRunning(false);
         break;
       case 'score':
         setScore(score + 1);

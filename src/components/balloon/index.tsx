@@ -13,7 +13,7 @@ export default (
     x,
     y,
     radius,
-    {isStatic: true, label: 'balloon'}
+    {label: 'balloon', isStatic: true}
   );
 
   Matter.World.add(world, [initialBalloon]);
