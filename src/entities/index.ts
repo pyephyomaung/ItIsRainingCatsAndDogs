@@ -28,7 +28,7 @@ export default (gameEngineRef: React.RefObject<IGameEngine>): Entities => {
     ));
 
     if (isBalloonPop) {
-      gameEngineRef.current?.dispatch({ type: "game-over"});
+      gameEngineRef.current?.dispatch({type: "game-over"});
     }
   });
 

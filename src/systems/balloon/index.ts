@@ -23,7 +23,7 @@ const UpdateBalloon = (
 
   // make sure the new position are within the screen
   newX = Math.max(Math.min(newX, SCREEN_WIDTH), 0);
-  newY = Math.max(Math.min(newX, SCREEN_HEIGHT), 0);
+  newY = Math.max(Math.min(newY, SCREEN_HEIGHT), 0);
   Matter.Body.setPosition(entities.Balloon.body, {x: newX, y: newY});
 
   return entities;

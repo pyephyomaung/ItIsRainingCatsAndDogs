@@ -10,11 +10,16 @@ import {IGameEngine, IGameEngineEvent}  from './App.types';
 
 const App: React.FC<{}> = props => {
   const gameEngineRef = useRef<IGameEngine>(null);
+  const [isWon, setIsWon] = useState(false);
   const [isRunning, setIsRunning] = useState(true);
   const [score, setScore] = useState(0);
 
   const onEvent = (e: IGameEngineEvent) => {
     switch (e.type) {
+      case 'ended':
+        setIsWon(true);
+        setIsRunning(false);
+        break;
       case 'game-over':
         //  setIsRunning(false);
         break;
@@ -26,6 +31,7 @@ const App: React.FC<{}> = props => {
 
   const reset = () => {
     gameEngineRef?.current?.swap(getEntities(gameEngineRef));
+    setIsWon(false);
     setIsRunning(true);
     setScore(0);
   };
@@ -47,8 +53,17 @@ const App: React.FC<{}> = props => {
       {!isRunning && (
         <TouchableOpacity style={styles.fullScreenButton} onPress={reset}>
           <View style={styles.fullScreen}>
-            <Text style={styles.gameOverText}>Game Over</Text>
-            <Text style={styles.gameOverSubText}>Try Again</Text>
+            {
+              isWon ? (
+                <Text style={styles.gameOverText}>You won!</Text>
+              ) : (
+                <>
+                  <Text style={styles.gameOverText}>Game Over</Text>
+                  <Text style={styles.gameOverSubText}>Try Again</Text>
+                </>
+              )
+            }
+            
           </View>
         </TouchableOpacity>
       )}

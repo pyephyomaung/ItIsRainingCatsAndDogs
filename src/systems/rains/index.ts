@@ -21,6 +21,7 @@ const Rains = (
   const patternIndex: number = entities.physics.rainState.patternIndex;
 
   let isScored = false;
+  let hasRain = false;
   Object.keys(entities).forEach(k => {
     const entity = k.startsWith('Rain') ? entities[k] as Entity : null;
     if (entity && entity.body.position.y > SCREEN_HEIGHT) {
@@ -28,10 +29,16 @@ const Rains = (
       delete(entities[k]);
       isScored = true;
     }
+
+    // also detect rain in entities to help detect end of the game
+    entity && (hasRain = true);
   });
   isScored && dispatch({type: 'score'});
 
-  if (tick % TICK_INTERVAL === 0 && patternIndex < patterns.length) {
+  // if no rain left on screen and patterns end, the game ends
+  if (patternIndex >= patterns.length && !hasRain) {
+    dispatch({type: 'ended'});
+  } else if (tick % TICK_INTERVAL === 0 && patternIndex < patterns.length) {
     const pattern = patterns[patternIndex];
     pattern.split('').forEach((char, index) => {
     
