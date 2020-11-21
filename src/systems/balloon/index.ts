@@ -1,37 +1,30 @@
-import {NativeTouchEvent} from 'react-native';
+import {NativeTouchEvent, TouchableWithoutFeedback} from 'react-native';
 import Matter from 'matter-js';
 import {
   IDefaultTouchProcessorEvent,
   IDefaultTouchProcessorMoveEvent
 } from '../../../App.types';
-import {SCREEN_WIDTH} from '../../constants';
-
-const X_GAP_THRESHOLD = 100;
+import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../../constants';
 
 const UpdateBalloon = (
   entities: any, 
   {touches}: {touches: IDefaultTouchProcessorEvent[]}
 ) => {
-  const moveTouch = touches.find(t => t.type === 'move') as IDefaultTouchProcessorMoveEvent;
-  if (moveTouch) {
-  
-    const touchX = moveTouch.event.pageX;
-    const movedX = entities.Balloon.body.position.x + moveTouch.delta.pageX;
-    const movedY = entities.Balloon.body.position.y + moveTouch.delta.pageY;
-    Matter.Body.setPosition(entities.Balloon.body, {x: touchX, y: movedY});
-    
-    const gap = touchX - entities.Balloon.body.position.x;
-    if (Math.abs(gap) > X_GAP_THRESHOLD) {
-      /* Matter.Body.setStatic(entities.Balloon.body, false); */
-      Matter.Body.setPosition(entities.Balloon.body, {x: movedX, y: movedY});
-/*       Matter.Body.setVelocity(entities.Balloon.body, {x: gap > 0 ? 10 : -10, y: 0}); */
-    } else {
-      Matter.Body.setVelocity(entities.Balloon.body, {x: 0, y: 0});
+  let newX = entities.Balloon.body.position.x;
+  let newY = entities.Balloon.body.position.y;
+  touches.forEach((t) => {
+      const touch = t as IDefaultTouchProcessorMoveEvent;
+      if (touch.type === 'move') {
+        // for each move touch, update position delta of the balloon
+        newX = newX + touch.delta.pageX;
+        newY = newY + touch.delta.pageY;
+      }
+    });
 
-      Matter.Body.setStatic(entities.Balloon.body, true);
-    }
-    
-  }
+  // make sure the new position are within the screen
+  newX = Math.max(Math.min(newX, SCREEN_WIDTH), 0);
+  newY = Math.max(Math.min(newX, SCREEN_HEIGHT), 0);
+  Matter.Body.setPosition(entities.Balloon.body, {x: newX, y: newY});
 
   return entities;
 };
