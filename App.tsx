@@ -3,6 +3,7 @@ import {Image, StatusBar, StyleSheet, View, Text, TouchableOpacity} from 'react-
 import getEntities from './src/entities';
 import Systems from './src/systems';
 import Images from './src/assets/images';
+import {theSoundOfSanFrancisco} from './src/assets/sounds';
 import {SCREEN_WIDTH, SCREEN_HEIGHT} from './src/constants';
 import {GameEngine, GameEngineProperties} from 'react-native-game-engine';
 import {IGameEngine, IGameEngineEvent}  from './App.types';
@@ -16,11 +17,17 @@ const App: React.FC<{}> = props => {
 
   const onEvent = (e: IGameEngineEvent) => {
     switch (e.type) {
+      case 'started':
+        theSoundOfSanFrancisco.setNumberOfLoops(-1);
+        theSoundOfSanFrancisco.play();
+        break;
       case 'ended':
         setIsWon(true);
         setIsRunning(false);
+        theSoundOfSanFrancisco.stop();
         break;
       case 'game-over':
+        // theSoundOfSanFrancisco.stop();
         //  setIsRunning(false);
         break;
       case 'score':
